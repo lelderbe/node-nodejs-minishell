@@ -48,6 +48,7 @@ cli.on('line', async (line) => {
 		console.log(ERR_INVALID_INPUT);
 	}
 
+	console.log(PWD_TEXT, state.pwd);
 	cli.prompt();
 });
 

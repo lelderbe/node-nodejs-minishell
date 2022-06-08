@@ -1,9 +1,12 @@
 import { list } from './fs/list.js';
+import { create } from './fs/create.js';
+// import { read } from './streams/read.js';
+import { read } from './fs/read.js';
 import path from 'path';
 import { chdir } from 'process';
 import { state } from './init.js';
 
-export const available = ['.exit', 'cd', 'ls', 'pwd', 'up'];
+export const available = ['.exit', 'add', 'cat', 'cd', 'ls', 'pwd', 'up'];
 
 const makePath = (target) => {
 	// console.log('makePath target:', target);
@@ -30,6 +33,26 @@ export const _ = async () => {
 	} catch {
 		console.log('Operation failed');
 	}
+};
+
+export const add = async ([target, ...rest]) => {
+	if (!target) {
+		throw new Error(ERR_INVALID_ARGUMENTS);
+	}
+
+	const dest = makePath(target);
+
+	await create(dest);
+};
+
+export const cat = async ([target, ...rest]) => {
+	if (!target) {
+		throw new Error(ERR_INVALID_ARGUMENTS);
+	}
+
+	const dest = makePath(target);
+
+	await read(dest);
 };
 
 export const pwd = async () => {

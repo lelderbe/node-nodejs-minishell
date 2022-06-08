@@ -11,3 +11,4 @@ export const PWD_TEXT = '\nYou are currently in';
 
 export const ERR_INVALID_INPUT = 'Invalid input';
 export const ERR_OPERATION_FAILED = 'Operation failed';
+export const ERR_INVALID_ARGUMENTS = 'Invalid arguments';
