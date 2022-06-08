@@ -1,0 +1,21 @@
+{
+  "name": "nodejs-minishell",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+	"start": "node src/index.js --username=lelderbe"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lelderbe/node-nodejs-minishell.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lelderbe/node-nodejs-minishell/issues"
+  },
+  "homepage": "https://github.com/lelderbe/node-nodejs-minishell#readme"
+}
