@@ -41,14 +41,14 @@ cli.on('line', async (line) => {
 		try {
 			await eval(`commands.${cmd}`)(args);
 		} catch (err) {
-			// console.log(err);
+			console.log(err);
 			console.log(ERR_OPERATION_FAILED);
 		}
 	} else {
 		console.log(ERR_INVALID_INPUT);
 	}
 
-	console.log(PWD_TEXT, state.pwd);
+	// console.log(PWD_TEXT, state.pwd);
 	cli.prompt();
 });
 
