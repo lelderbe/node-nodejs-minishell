@@ -1,8 +1,10 @@
-import { parseArgs } from './cli/args.js';
 import os from 'os';
 import { chdir } from 'process';
+import { parseArgs } from './cli/args.js';
 
-export const state = {};
+export const state = {
+	advanced: false,
+};
 
 // console.log('init');
 
@@ -20,5 +22,5 @@ try {
 	chdir(state.pwd);
 } catch (err) {
 	console.error(`Fatal error: ${err}`);
-	process.exit(0);
+	process.exit(1);
 }
