@@ -4,7 +4,11 @@ import {
 	CMD_EXIT,
 	PWD_TEXT,
 	ERR_INVALID_INPUT,
+	ERR_INVALID_ARGUMENTS,
 	ERR_OPERATION_FAILED,
+	RED,
+	BLUE,
+	RESET,
 } from './constants.js';
 import { state } from './init.js';
 import * as commands from './commands.js';
@@ -12,12 +16,14 @@ import * as commands from './commands.js';
 const cli = readline.createInterface({
 	input: process.stdin,
 	output: process.stdout,
-	prompt: `${APP_NAME}> `,
+	prompt: BLUE + `${APP_NAME}> ` + RESET,
 });
 
-console.log('state:', state);
-console.log(`Welcome to the File Manager, ${state.username}!`);
+// console.log('state:', state);
+console.log(BLUE + `Welcome to the File Manager, ${state.username}!`, RESET);
 console.log(PWD_TEXT, state.pwd);
+
+// console.log(commands);
 
 cli.prompt();
 
@@ -36,24 +42,38 @@ cli.on('line', async (line) => {
 		return;
 	}
 
-	if (commands.available.includes(cmd)) {
-		// TODO replace eval with something more safe?
+	if (cmd in commands) {
 		try {
-			await eval(`commands.${cmd}`)(args);
+			await commands[cmd](args);
 		} catch (err) {
-			console.log(err);
-			console.log(ERR_OPERATION_FAILED);
+			switch (err.message) {
+				case ERR_INVALID_INPUT:
+				case ERR_INVALID_ARGUMENTS:
+				case ERR_OPERATION_FAILED:
+					console.log('\x1B[31mhello\x1B[34m world');
+					console.log(RED + err.message, RESET);
+					// console.log(err.message);
+					break;
+				default:
+					console.log(err.message);
+					console.log(ERR_OPERATION_FAILED);
+					break;
+			}
 		}
 	} else {
-		console.log(ERR_INVALID_INPUT);
+		console.log(RED + ERR_INVALID_INPUT, RESET);
+		// console.log(ERR_INVALID_INPUT);
 	}
 
-	// console.log(PWD_TEXT, state.pwd);
+	console.log(PWD_TEXT, state.pwd);
 	cli.prompt();
 });
 
 cli.on('close', () => {
-	console.log(`Thank you for using File Manager, ${state.username}!`);
+	console.log(
+		BLUE + `Thank you for using File Manager, ${state.username}!`,
+		RESET,
+	);
 	process.exit(0);
 });
 

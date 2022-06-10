@@ -8,20 +8,8 @@ import { remove } from './fs/delete.js';
 import path from 'path';
 import { chdir } from 'process';
 import { state } from './init.js';
-
-export const available = [
-	'.exit',
-	'add',
-	'cat',
-	'cd',
-	'cp',
-	'ls',
-	'mv',
-	'pwd',
-	'rm',
-	'rn',
-	'up',
-];
+import { BLUE, ERR_INVALID_ARGUMENTS, RESET } from './constants.js';
+import { EOL, cpus, userInfo, arch } from 'os';
 
 const makePath = (target) => {
 	// console.log('makePath target:', target);
@@ -42,7 +30,7 @@ const makePath = (target) => {
 	return dest;
 };
 
-export const _ = async () => {
+const _ = async () => {
 	try {
 		// await list(path);
 	} catch {
@@ -51,13 +39,40 @@ export const _ = async () => {
 };
 
 export const add = async ([target, ...rest]) => {
-	if (!target) {
+	if (!target || rest.length) {
 		throw new Error(ERR_INVALID_ARGUMENTS);
 	}
 
-	const dest = makePath(target);
+	// const dest = makePath(target);
+	const dest = makePath(path.basename(target));
 
 	await create(dest);
+};
+
+export const os = async ([arg, ...rest]) => {
+	if (rest.length) {
+		throw new Error(ERR_INVALID_ARGUMENTS);
+	}
+
+	switch (arg) {
+		case '--EOL':
+			console.log(JSON.stringify(EOL));
+			break;
+		case '--cpus':
+			console.log(cpus());
+			break;
+		case '--homedir':
+			console.log(userInfo().homedir);
+			break;
+		case '--username':
+			console.log(userInfo().username);
+			break;
+		case '--architecture':
+			console.log(arch());
+			break;
+		default:
+			throw new Error(ERR_INVALID_ARGUMENTS);
+	}
 };
 
 export const rn = async ([src, dst, ...rest]) => {
@@ -127,6 +142,37 @@ export const ls = async ([target, ...rest]) => {
 
 export const up = async () => {
 	await cd(['..']);
+};
+
+export const help = async (cmd) => {
+	console.log(`
+Navigation & working directory (nwd):
+ up - go upper from current directory
+ cd path_to_directory - go to dedicated folder from current directory
+ ls - list all files and folder in current directory and print it to console
+
+Basic operations with files:
+ add new_file_name - create empty file in current working directory
+ cat path_to_file - read file and print it's content in console
+ rn path_to_file new_filename - rename file
+ cp path_to_file path_to_new_directory - copy file
+ mv path_to_file path_to_new_directory - move file
+ rm path_to_file - delete file
+
+Operating system info:
+ os --EOL - get default system End-Of-Line
+ os --cpus - get host machine CPUs info
+ os --homedir - get home directory
+ os --username - get current system user name
+ os --architecture - get CPU architecture for which Node.js binary has compiled
+
+Hash calculation:
+ hash path_to_file - calculate hash for file and print it into console
+
+Compress and decompress operations:
+ compress path_to_file path_to_destination - compress file (using Brotli algorytm)
+ decompress path_to_file path_to_destination - decompress file (using Brotli algorytm)
+`);
 };
 
 export const cd = async ([target, ...rest]) => {

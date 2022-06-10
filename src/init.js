@@ -4,7 +4,7 @@ import { chdir } from 'process';
 
 export const state = {};
 
-console.log('init');
+// console.log('init');
 
 state.username = parseArgs().username;
 
