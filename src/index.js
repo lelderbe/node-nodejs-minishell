@@ -11,7 +11,8 @@ import {
 	RESET,
 } from './constants.js';
 import { state } from './init.js';
-import * as commands from './commands.js';
+// import * as commands from './commands.js';
+import * as commands from './commands/index.js';
 
 const cli = readline.createInterface({
 	input: process.stdin,
@@ -23,7 +24,7 @@ const cli = readline.createInterface({
 console.log(BLUE + `Welcome to the File Manager, ${state.username}!`, RESET);
 console.log(PWD_TEXT, state.pwd);
 
-// console.log(commands);
+console.log(commands);
 
 cli.prompt();
 
