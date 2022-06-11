@@ -1,10 +1,10 @@
-import fs from 'fs/promises';
-import { pipeline } from 'stream/promises';
+import fs from 'fs';
 
 export const read = async (filename) => {
-	const fd = await fs.open(filename);
-	const inputStream = fd.createReadStream({ encoding: 'utf-8' });
-	await pipeline(inputStream, process.stdout);
-	console.log('pipeline done');
-	// inputStream.pipe(process.stdout);
+	return new Promise((resolve, reject) => {
+		const stream = fs.createReadStream(filename, 'utf8');
+		stream.on('error', (err) => reject(err));
+		stream.on('data', (chunk) => process.stdout.write(chunk));
+		stream.on('end', () => resolve());
+	});
 };

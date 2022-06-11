@@ -24,7 +24,7 @@ Hash calculation:
  hash path_to_file - calculate hash for file and print it into console
 
 Compress and decompress operations:
- compress path_to_file path_to_destination - compress file (using Brotli algorytm)
- decompress path_to_file path_to_destination - decompress file (using Brotli algorytm)
+ compress path_to_file path_to_new_file - compress file (using Brotli algorytm)
+ decompress path_to_file path_to_new_file - decompress file (using Brotli algorytm)
 `);
 };
