@@ -51,19 +51,16 @@ cli.on('line', async (line) => {
 				case ERR_INVALID_INPUT:
 				case ERR_INVALID_ARGUMENTS:
 				case ERR_OPERATION_FAILED:
-					console.log('\x1B[31mhello\x1B[34m world');
 					console.log(RED + err.message, RESET);
-					// console.log(err.message);
 					break;
 				default:
 					console.log(err.message);
-					console.log(ERR_OPERATION_FAILED);
+					console.log(RED + ERR_OPERATION_FAILED, RESET);
 					break;
 			}
 		}
 	} else {
 		console.log(RED + ERR_INVALID_INPUT, RESET);
-		// console.log(ERR_INVALID_INPUT);
 	}
 
 	console.log(PWD_TEXT, state.pwd);
