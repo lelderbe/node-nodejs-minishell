@@ -4,7 +4,6 @@ import {
 	CMD_EXIT,
 	PWD_TEXT,
 	ERR_INVALID_INPUT,
-	ERR_INVALID_ARGUMENTS,
 	ERR_OPERATION_FAILED,
 	RESET,
 } from './constants.js';
@@ -26,7 +25,14 @@ console.log(PWD_TEXT, state.pwd);
 cli.prompt();
 
 cli.on('line', async (line) => {
-	const [cmd, ...args] = line.trim().split(' ');
+	const [cmd, ...rest] = line.trim().split(' ');
+
+	const args = rest
+		.join(' ')
+		.split('"')
+		.map((item, i) => (i % 2 === 0 ? item.trim().split(' ') : item.trim()))
+		.flat()
+		.filter((item) => item !== '');
 
 	if (cmd === CMD_EXIT) {
 		cli.close();
@@ -44,7 +50,6 @@ cli.on('line', async (line) => {
 		} catch (err) {
 			switch (err.message) {
 				case ERR_INVALID_INPUT:
-				case ERR_INVALID_ARGUMENTS:
 				case ERR_OPERATION_FAILED:
 					console.log(state.colors.err + err.message, RESET);
 					break;
