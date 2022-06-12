@@ -3,7 +3,10 @@ import { ERR_INVALID_INPUT } from '../constants.js';
 
 const _cpus = () => {
 	const result = cpus().map((item) => {
-		return { model: item.model, speed: item.speed / 1000 };
+		while (item.speed > 10) {
+			item.speed /= 10;
+		}
+		return { model: item.model, speed: item.speed };
 	});
 
 	result.unshift({ 'overall amount of CPUs': result.length });

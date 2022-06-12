@@ -37,7 +37,7 @@ export const cp = async ([src, dst, ...rest]) => {
 	const dstPath = makePath(path.join(dst, path.basename(src)));
 
 	if (srcPath === dstPath) {
-		throw new Error(ERR_OPERATION_FAILED);
+		return;
 	}
 
 	if (!(await stat(srcPath)).isFile()) {
@@ -48,6 +48,13 @@ export const cp = async ([src, dst, ...rest]) => {
 };
 
 export const mv = async ([src, dst, ...rest]) => {
+	const srcPath = makePath(src);
+	const dstPath = makePath(path.join(dst, path.basename(src)));
+
+	if (srcPath === dstPath) {
+		return;
+	}
+
 	await cp([src, dst, ...rest]);
 	await rm([src, ...rest]);
 };
