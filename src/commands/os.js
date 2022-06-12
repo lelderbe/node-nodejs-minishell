@@ -1,7 +1,6 @@
 import { EOL, cpus, userInfo, arch } from 'os';
 import { ERR_INVALID_ARGUMENTS } from '../constants.js';
 
-// for people who crazy about GHz
 const _cpus = () => {
 	const result = cpus().map((item) => {
 		while (item.speed > 10) {

@@ -23,9 +23,7 @@ export const ls = async ([target, ...rest]) => {
 	await list(state.pwd);
 };
 
-export const pwd = async (rest) => {
-	throw new Error(ERR_INVALID_INPUT);
-
+const pwd = async (rest) => {
 	if (rest.length) {
 		throw new Error(ERR_INVALID_ARGUMENTS);
 	}
