@@ -6,22 +6,22 @@ import {
 	ERR_INVALID_INPUT,
 	ERR_INVALID_ARGUMENTS,
 	ERR_OPERATION_FAILED,
-	RED,
-	BLUE,
 	RESET,
 } from './constants.js';
 import { state } from './init.js';
-// import * as commands from './commands.js';
 import * as commands from './commands/index.js';
 
 const cli = readline.createInterface({
 	input: process.stdin,
 	output: process.stdout,
-	prompt: BLUE + `${APP_NAME}> ` + RESET,
+	prompt: state.colors.cli + `${APP_NAME}> ` + RESET,
 });
 
 // console.log('state:', state);
-console.log(BLUE + `Welcome to the File Manager, ${state.username}!`, RESET);
+console.log(
+	state.colors.cli + `Welcome to the File Manager, ${state.username}!`,
+	RESET,
+);
 console.log(PWD_TEXT, state.pwd);
 
 console.log(commands);
@@ -30,7 +30,6 @@ cli.prompt();
 
 cli.on('line', async (line) => {
 	const [cmd, ...args] = line.trim().split(' ');
-	// console.log('Request for command:', cmd, 'with args:', args);
 
 	if (cmd === CMD_EXIT) {
 		cli.close();
@@ -38,7 +37,6 @@ cli.on('line', async (line) => {
 	}
 
 	if (cmd === '') {
-		// TODO refactor
 		cli.prompt();
 		return;
 	}
@@ -51,16 +49,15 @@ cli.on('line', async (line) => {
 				case ERR_INVALID_INPUT:
 				case ERR_INVALID_ARGUMENTS:
 				case ERR_OPERATION_FAILED:
-					console.log(RED + err.message, RESET);
+					console.log(state.colors.err + err.message, RESET);
 					break;
 				default:
-					console.log(err.message);
-					console.log(RED + ERR_OPERATION_FAILED, RESET);
+					console.log(state.colors.err + ERR_OPERATION_FAILED, RESET);
 					break;
 			}
 		}
 	} else {
-		console.log(RED + ERR_INVALID_INPUT, RESET);
+		console.log(state.colors.err + ERR_INVALID_INPUT, RESET);
 	}
 
 	console.log(PWD_TEXT, state.pwd);
@@ -69,7 +66,8 @@ cli.on('line', async (line) => {
 
 cli.on('close', () => {
 	console.log(
-		BLUE + `Thank you for using File Manager, ${state.username}!`,
+		state.colors.cli +
+			`Thank you for using File Manager, ${state.username}!`,
 		RESET,
 	);
 	process.exit(0);
