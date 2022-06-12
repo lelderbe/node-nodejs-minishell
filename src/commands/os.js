@@ -1,13 +1,9 @@
 import { EOL, cpus, userInfo, arch } from 'os';
-import { ERR_INVALID_ARGUMENTS } from '../constants.js';
+import { ERR_INVALID_INPUT } from '../constants.js';
 
 const _cpus = () => {
 	const result = cpus().map((item) => {
-		while (item.speed > 10) {
-			item.speed /= 10;
-		}
-
-		return { model: item.model, speed: item.speed };
+		return { model: item.model, speed: item.speed / 1000 };
 	});
 
 	result.unshift({ 'overall amount of CPUs': result.length });
@@ -29,7 +25,7 @@ const valid = (args) => {
 
 export const os = async (args) => {
 	if (!valid(args)) {
-		throw new Error(ERR_INVALID_ARGUMENTS);
+		throw new Error(ERR_INVALID_INPUT);
 	}
 
 	args.forEach((item) => keys[item]());
