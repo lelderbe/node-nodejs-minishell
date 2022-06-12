@@ -18,3 +18,7 @@ export const BLUE = '\x1B[0;34m';
 export const PURPLE = '\x1B[0;35m';
 export const CYAN = '\x1B[0;36m';
 export const WHITE = '\x1B[0;37m';
+
+export const GRAY = '\x1B[38;5;8m';
+
+export const MINGW = '\x1B[38;2;95;175;255m';

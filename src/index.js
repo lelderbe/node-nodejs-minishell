@@ -17,14 +17,11 @@ const cli = readline.createInterface({
 	prompt: state.colors.cli + `${APP_NAME}> ` + RESET,
 });
 
-// console.log('state:', state);
 console.log(
 	state.colors.cli + `Welcome to the File Manager, ${state.username}!`,
 	RESET,
 );
 console.log(PWD_TEXT, state.pwd);
-
-console.log(commands);
 
 cli.prompt();
 

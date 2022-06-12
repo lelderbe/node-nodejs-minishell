@@ -1,16 +1,28 @@
 import os from 'os';
 import { chdir } from 'process';
 import { parseArgs } from './cli/args.js';
-import { BLUE, RED } from './constants.js';
+import { BLUE, MINGW, RED } from './constants.js';
 
 export const state = {
 	colors: {},
 };
 
-state.colors.cli = BLUE;
-state.colors.err = RED;
+const args = parseArgs();
 
-state.username = parseArgs().username;
+state.username = args.username;
+state.colors.disable = args.colors === 'disable' ? true : false;
+
+state.colors.cli = '';
+state.colors.err = '';
+
+if (!state.colors.disable) {
+	state.colors.cli = BLUE;
+	state.colors.err = RED;
+
+	if (Object.keys(process.env).some((item) => item.startsWith('MINGW'))) {
+		state.colors.cli = MINGW;
+	}
+}
 
 if (!state.username) {
 	console.log('Error: wrong arguments. Use key: --username=your_name');
