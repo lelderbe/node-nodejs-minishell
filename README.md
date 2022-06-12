@@ -1,8 +1,8 @@
 # File Manager
 
-This is my minishell with some available commands listed below.
+A tiny minishell written by JavaScript with Node.js.
 
-Task here: https://github.com/AlreadyBored/nodejs-assignments/blob/main/assignments/file-manager/assignment.md
+Task is [here](https://github.com/AlreadyBored/nodejs-assignments/blob/main/assignments/file-manager/assignment.md).
 
 ![image](https://user-images.githubusercontent.com/29270751/173243116-c888b38f-7969-42d4-8feb-9589bed7db8e.png)
 
@@ -90,6 +90,6 @@ minishell> hash /Documents/data.doc
 Examples:
 
 ```
-minishell> compress file.txt file.br
+minishell> compress ./from/file.txt ./to/file.br
 minishell> decompress file.br /Documents/new.txt
 ```
