@@ -4,16 +4,24 @@ This is my minishell with some available commands listed below.
 
 Task here: https://github.com/AlreadyBored/nodejs-assignments/blob/main/assignments/file-manager/assignment.md
 
-## How to run
+![image](https://user-images.githubusercontent.com/29270751/173243116-c888b38f-7969-42d4-8feb-9589bed7db8e.png)
+
+## 🚀 How to run
 
 ```
 npm start -- --username=your_username
 ```
 
 Minishell uses some color output, if color text is not readable for you,  
-you can disable colors with: **--colors=disable**
+you can disable colors with **--colors=disable** option.
 
-## Available commands:
+## 💥 Features supported
+
+-   absolute and relative paths
+-   filenames and folders with spaces - "./Some folder/nice file.txt" (but don't get crazy 😏)
+-   builtin 'help' command
+
+## 💻 Available commands
 
 -   help - show all commands
 
@@ -41,6 +49,13 @@ minishell> rn folder1/f2.txt f3.txt
 minishell> cp folder1/f2.txt ./folder2
 minishell> mv folder1/f2.txt ./folder3
 minishell> rm folder1/f2.txt
+```
+
+Try to use file names with spaces:
+
+```
+minishell> add "nice file.txt"
+minishell> cat "long name folder/who is there.txt"
 ```
 
 #### Operating system info:
