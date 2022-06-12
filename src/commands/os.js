@@ -1,28 +1,37 @@
-import { ERR_INVALID_ARGUMENTS } from '../constants.js';
 import { EOL, cpus, userInfo, arch } from 'os';
+import { ERR_INVALID_ARGUMENTS } from '../constants.js';
 
-export const os = async ([arg, ...rest]) => {
-	if (rest.length) {
+// for people who crazy about GHz
+const _cpus = () => {
+	const result = cpus().map((item) => {
+		while (item.speed > 10) {
+			item.speed /= 10;
+		}
+
+		return { model: item.model, speed: item.speed };
+	});
+
+	result.unshift({ 'overall amount of CPUs': result.length });
+
+	console.log(result);
+};
+
+const keys = {
+	'--EOL': () => console.log(JSON.stringify(EOL)),
+	'--cpus': _cpus,
+	'--homedir': () => console.log(userInfo().homedir),
+	'--username': () => console.log(userInfo().username),
+	'--architecture': () => console.log(arch()),
+};
+
+const valid = (args) => {
+	return args.every((item) => Object.keys(keys).includes(item));
+};
+
+export const os = async (args) => {
+	if (!valid(args)) {
 		throw new Error(ERR_INVALID_ARGUMENTS);
 	}
 
-	switch (arg) {
-		case '--EOL':
-			console.log(JSON.stringify(EOL));
-			break;
-		case '--cpus':
-			console.log(cpus());
-			break;
-		case '--homedir':
-			console.log(userInfo().homedir);
-			break;
-		case '--username':
-			console.log(userInfo().username);
-			break;
-		case '--architecture':
-			console.log(arch());
-			break;
-		default:
-			throw new Error(ERR_INVALID_ARGUMENTS);
-	}
+	args.forEach((item) => keys[item]());
 };
