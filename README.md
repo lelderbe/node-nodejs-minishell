@@ -10,9 +10,10 @@ Task here: https://github.com/AlreadyBored/nodejs-assignments/blob/main/assignme
 npm start -- --username=your_username
 ```
 
-Minishell uses some color output, if color text is not readable for you, you can disable colors with: **--colors=disable**
+Minishell uses some color output, if color text is not readable for you,  
+you can disable colors with: **--colors=disable**
 
-## Inside minishell available commands:
+## Available commands:
 
 -   help - show all commands
 
@@ -75,5 +76,5 @@ Examples:
 
 ```
 minishell> compress file.txt file.br
-minishell> decompress file.br new.txt
+minishell> decompress file.br /Documents/new.txt
 ```
